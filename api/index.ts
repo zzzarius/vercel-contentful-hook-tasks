@@ -2,7 +2,7 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import { type Asset, createClient } from 'contentful-management';
 
 const client = createClient({
-  accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY!,
+  accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN!,
 });
 
 
