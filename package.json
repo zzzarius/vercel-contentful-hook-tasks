@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vercel/node": "^5.1.16",
     "contentful-management": "^11.52.2"
   }
 }
