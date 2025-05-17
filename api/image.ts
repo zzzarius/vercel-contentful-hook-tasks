@@ -32,15 +32,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!isAsset(body)) {
     return res.status(400).send("Invalid asset object");
   }
-  // const isImage = body.fields?.file?.fields?.contentType.startsWith('image/');
-  // if (!isImage) {
-  //   return res.status(400).send("Not an image");
-  // }
+  const isImage = body.fields?.file?.['en-US'].contentType.startsWith('image/');
+  if (!isImage) {
+    return res.status(400).send("Not an image");
+  }
   const env = await getEnvironment();
   env.createEntryWithId('mediaImage', body.sys.id + '-media', {
     fields: {
       internalName: {
-        'en-US': body.fields?.title['en-US'] ?? body.fields?.file?.fields?.fileName ?? 'No name'
+        'en-US': body.fields?.title['en-US'] ?? body.fields?.file?.['en-US']?.fileName ?? 'No name'
       },
       image: {
         'en-US': {
