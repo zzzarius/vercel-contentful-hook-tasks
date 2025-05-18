@@ -12,6 +12,8 @@ const client = createClient({
   accessToken,
 });
 
+const hookSecret = process.env.CONTENTFUL_HOOK_SECRET;
+
 async function getEnvironment() {
   const space = await client.getSpace(spaceId);
   const environment = await space.getEnvironment(environmentId);
@@ -55,6 +57,9 @@ function getFieldObject(
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { body, query = {} } = req;
+  if (hookSecret && req.headers?.Authorization !== hookSecret) {
+    return res.status(401).send("Unauthorized");
+  }
   if (!body) {
     return res.status(400).send("No body provided");
   }
