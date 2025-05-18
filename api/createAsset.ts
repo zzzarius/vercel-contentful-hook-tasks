@@ -33,6 +33,26 @@ function isAsset(obj: unknown): obj is Asset {
   );
 }
 
+function getFieldObject(
+  locale: string,
+  fieldName?: string,
+  value?: unknown,
+): { [key: string]: unknown } {
+  if (!fieldName || !value) {
+    return {};
+  }
+  const fieldNames = fieldName.split(",");
+  return fieldNames.reduce(
+    (acc, field) => {
+      acc[field] = {
+        [locale]: value,
+      };
+      return acc;
+    },
+    {} as { [key: string]: unknown },
+  );
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { body, query = {} } = req;
   if (!body) {
@@ -83,28 +103,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     body.sys.id + idSuffix,
     {
       fields: {
-        ...(referenceField
-          ? {
-              [referenceField]: {
-                [locale]: {
-                  sys: { id: body.sys.id, type: "Link", linkType: "Asset" },
-                },
-              },
-            }
-          : {}),
-        ...(titleField && body.fields?.title?.[locale]
-          ? { [titleField]: { [locale]: body.fields.title[locale] } }
-          : {}),
-        ...(descriptionField && body.fields?.description?.[locale]
-          ? {
-              [descriptionField]: {
-                [locale]: body.fields?.description?.[locale],
-              },
-            }
-          : {}),
-        ...(fileField && body.fields?.file?.[locale]?.fileName
-          ? { [fileField]: { [locale]: body.fields?.file[locale].fileName } }
-          : {}),
+        ...getFieldObject(
+          locale,
+          referenceField,
+          body.sys?.id
+            ? { sys: { id: body.sys.id, type: "Link", linkType: "Asset" } }
+            : undefined,
+        ),
+        ...getFieldObject(locale, titleField, body.fields?.title?.[locale]),
+        ...getFieldObject(
+          locale,
+          descriptionField,
+          body.fields?.description?.[locale],
+        ),
+        ...getFieldObject(
+          locale,
+          fileField,
+          body.fields?.file?.[locale]?.fileName,
+        ),
       },
     },
   );
