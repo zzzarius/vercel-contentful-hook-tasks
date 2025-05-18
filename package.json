@@ -1,16 +1,15 @@
 {
-  "name": "contentful-tasks",
+  "name": "vercel-contentful-hook-tasks",
   "version": "1.0.0",
-  "main": "./api/index.ts",
+  "main": "./api/createAsset.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "lint:dangerous": "biome lint --write --unsafe ."
   },
-  "author": "",
+  "author": "Darius Zivertas",
   "license": "ISC",
-  "description": "",
+  "description": "It's a simple vercel function which creates Content entries based on Asset data.",
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
     "@vercel/node": "^5.1.16",
