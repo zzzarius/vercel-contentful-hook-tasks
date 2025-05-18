@@ -94,7 +94,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (!isAsset(body)) {
-    return res.status(400).send("Invalid asset object");
+    return res
+      .status(400)
+      .send(
+        "Invalid asset object. Configure Contentful hook to send default payload",
+      );
   }
   const env = await getEnvironment();
 
