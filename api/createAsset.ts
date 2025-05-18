@@ -1,19 +1,20 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { type Asset, createClient } from "contentful-management";
 
+const accessToken =
+  process.env.CONTENTFUL_MANAGEMENT_API_KEY ||
+  "please add CONTENTFUL_MANAGEMENT_API_KEY env var";
+const spaceId =
+  process.env.CONTENTFUL_SPACE_ID || "please add CONTENTFUL_SPACE_ID env var";
+const environmentId = process.env.CONTENTFUL_ENVIRONMENT_ID || "master";
+
 const client = createClient({
-  accessToken:
-    process.env.CONTENTFUL_MANAGEMENT_API_KEY ||
-    "please add CONTENTFUL_MANAGEMENT_API_KEY env var",
+  accessToken,
 });
 
 async function getEnvironment() {
-  const space = await client.getSpace(
-    process.env.CONTENTFUL_SPACE_ID || "please add CONTENTFUL_SPACE_ID env var",
-  );
-  const environment = await space.getEnvironment(
-    process.env.CONTENTFUL_ENVIRONMENT_ID || "master",
-  );
+  const space = await client.getSpace(spaceId);
+  const environment = await space.getEnvironment(environmentId);
   return environment;
 }
 
@@ -77,31 +78,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const env = await getEnvironment();
 
-  env.createEntryWithId(contentTypeToCreate, body.sys.id + idSuffix, {
-    fields: {
-      ...(referenceField
-        ? {
-            [referenceField]: {
-              [locale]: {
-                sys: { id: body.sys.id, type: "Link", linkType: "Asset" },
+  const createdEntry = await env.createEntryWithId(
+    contentTypeToCreate,
+    body.sys.id + idSuffix,
+    {
+      fields: {
+        ...(referenceField
+          ? {
+              [referenceField]: {
+                [locale]: {
+                  sys: { id: body.sys.id, type: "Link", linkType: "Asset" },
+                },
               },
-            },
-          }
-        : {}),
-      ...(titleField && body.fields?.title?.[locale]
-        ? { [titleField]: { [locale]: body.fields.title[locale] } }
-        : {}),
-      ...(descriptionField && body.fields?.description?.[locale]
-        ? {
-            [descriptionField]: {
-              [locale]: body.fields?.description?.[locale],
-            },
-          }
-        : {}),
-      ...(fileField
-        ? { [fileField]: { [locale]: body.fields?.file[locale] } }
-        : {}),
+            }
+          : {}),
+        ...(titleField && body.fields?.title?.[locale]
+          ? { [titleField]: { [locale]: body.fields.title[locale] } }
+          : {}),
+        ...(descriptionField && body.fields?.description?.[locale]
+          ? {
+              [descriptionField]: {
+                [locale]: body.fields?.description?.[locale],
+              },
+            }
+          : {}),
+        ...(fileField
+          ? { [fileField]: { [locale]: body.fields?.file[locale] } }
+          : {}),
+      },
     },
-  });
-  return res.status(200).send(JSON.stringify(body, null, 2));
+  );
+  return res
+    .status(200)
+    .send(
+      `https://app.contentful.com/spaces/${spaceId}/environments/${environmentId}/entries/${createdEntry.sys.id}`,
+    );
 }
