@@ -45,7 +45,7 @@ Fully configurable through query parameters.
 7. For trigger - check `Publish` on `Asset` row in Content Events.
 8. (Optional) If you have `CONTENTFUL_HOOK_SECRET` configured
    1. In `Headers` click `+ Add secret headers` button
-   2. For key use `Authorization` and for value - same value configured in `CONTENTFUL_HOOK_SECRET` environment variable.
+   2. For key use `authorization` and for value - same value configured in `CONTENTFUL_HOOK_SECRET` environment variable.
 9. Ensure that for __Payload__ `Use default payload` is selected.
 10. Click save
 

@@ -57,7 +57,7 @@ function getFieldObject(
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { body, query = {} } = req;
-  if (hookSecret && req.headers?.Authorization !== hookSecret) {
+  if (hookSecret && req.headers?.authorization !== hookSecret) {
     return res.status(401).send("Unauthorized");
   }
   if (!body) {
