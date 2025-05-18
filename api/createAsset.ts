@@ -102,8 +102,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               },
             }
           : {}),
-        ...(fileField
-          ? { [fileField]: { [locale]: body.fields?.file[locale] } }
+        ...(fileField && body.fields?.file?.[locale]?.fileName
+          ? { [fileField]: { [locale]: body.fields?.file[locale].fileName } }
           : {}),
       },
     },
