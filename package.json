@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "main": "./api/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "lint:dangerous": "biome lint --write --unsafe ."
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@vercel/node": "^5.1.16",
     "contentful-management": "^11.52.2"
   }
