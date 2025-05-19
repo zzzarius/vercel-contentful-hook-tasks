@@ -50,3 +50,10 @@ Fully configurable through query parameters.
 10. Click save
 
 If this project is deployed and everything is configured correctly - your content entry will be created once Asset is published.
+
+## Screenshots
+
+### Example hook configuration
+
+![Contentful hook configuration screenshot](./images/hook-config.avif)
+
