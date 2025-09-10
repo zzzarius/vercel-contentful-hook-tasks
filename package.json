@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "lint:dangerous": "biome lint --write --unsafe ."
+    "lint:dangerous": "biome lint --write --unsafe .",
+    "biome:migrate": "biome migrate --write"
   },
   "author": "Darius Zivertas",
   "license": "ISC",
@@ -14,7 +15,7 @@
     "contentful-management": "^11.54.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.2",
+    "@biomejs/biome": "^2.2.3",
     "@vercel/node": "^5.3.17"
   }
 }
