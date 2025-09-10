@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "lint:dangerous": "biome lint --write --unsafe ."
+    "lint:dangerous": "biome lint --write --unsafe .",
+    "biome:migrate": "biome migrate --write"
   },
   "author": "Darius Zivertas",
   "license": "ISC",
