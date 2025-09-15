@@ -15,7 +15,7 @@
     "contentful-management": "^11.54.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.3",
+    "@biomejs/biome": "^2.2.4",
     "@vercel/node": "^5.3.21"
   }
 }
