@@ -12,10 +12,10 @@
   "license": "ISC",
   "description": "It's a simple vercel function which creates Content entries based on Asset data.",
   "dependencies": {
-    "contentful-management": "^11.54.4"
+    "contentful-management": "^11.57.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
-    "@vercel/node": "^5.3.21"
+    "@vercel/node": "^5.3.22"
   }
 }
