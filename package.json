@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.4",
-    "@vercel/node": "^27.0.1"
+    "@vercel/node": "^29.0.0"
   }
 }
